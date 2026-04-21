@@ -5,7 +5,9 @@ export const handler = async (event: any, context: any) => {
     const request = new Request(event.rawUrl, {
       method: event.httpMethod,
       headers: event.headers,
-      body: event.body,
+      body: ["GET", "HEAD"].includes(event.httpMethod)
+        ? undefined
+        : event.body,
     });
 
     const response = await server.fetch(request);
